@@ -4,10 +4,10 @@
       <div v-for="reservation in reservations" :key="reservation.seat">
         <p>食堂: {{ reservation.canteen }}</p>
         <p>楼层: {{ reservation.floor }}</p>
-        <p>座位: {{ reservation.seat }}</p>
+        <p>座位: {{ reservation.seatgroup+reservation.seatnumber }}</p>
         <p>预约时间: {{ reservation.time }} 分钟</p>
       </div>
-      <router-link to="/">返回</router-link>
+      <router-link to="/seat">返回</router-link>
     </div>
   </template>
   

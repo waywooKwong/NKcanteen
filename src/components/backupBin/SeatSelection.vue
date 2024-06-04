@@ -45,53 +45,17 @@ export default {
     }
   },
   methods: {
-    async fetchReservations() {
-      try {
-        const basicInfo = {
-          canteen: this.canteen,
-          floor: this.floor,
-        };
-        // 控制台打印当前信息
-        console.log('当前食堂：', this.canteen, '\n当前楼层：', this.floor);
-
-        // 使用axios.get发送带有查询参数的请求时，需要将参数放在配置对象的params属性中
-        const response = await axios.get('http://localhost:3000/reservations', { params: basicInfo });
-        const reservations = response.data;
-        this.updateSeatsStatus(reservations);
-      } catch (error) {
-        console.error('Failed to fetch reservations', error);
-      }
-    },
-    updateSeatsStatus(reservations) {
-      this.seatGroups.forEach(group => {
-        group.seats.forEach(seat => {
-          const reservation = reservations.find(res => res.seatgroup === group.name && res.seatnumber === seat.number);
-          if (reservation) {
-            seat.status = 'reserved';
-            setTimeout(() => {
-              seat.status = 'ending';
-              setTimeout(() => {
-                seat.status = 'available';
-              }, 60000); // 预约结束一分种前，座位变黄
-            }, (reservation.time - 1) * 60000); // 预约结束一分钟之前都是不可预约状态
-          } else {
-            seat.status = 'available';
-          }
-        });
-      });
-    },
     updateSeats(floor) {
-      // 初始化所有座位为可用状态
-      this.seatGroups.forEach(group => {
-        group.seats = [];
-        for (let i = 1; i <= this.seatsPerGroup; i++) {
-          group.seats.push({ number: i.toString(), status: 'available', group: group.name });
-        }
-      });
-      // 获取预约信息并更新座位状态
-      this.fetchReservations();
-    },
+      const seatsData = [];
+      for (let i = 1; i <= this.seatsPerGroup; i++) {
+        const randomStatus = Math.random() < 0.3 ? 'reserved' : (Math.random() < 0.5 ? 'ending' : 'available');
+        seatsData.push({ number: i.toString(), status: randomStatus });
+      }
 
+      this.seatGroups.forEach(group => {
+        group.seats = seatsData.map(seat => ({ ...seat, group: group.name }));
+      });
+    },
     seatClass(seat) {
       if (seat.status === 'reserved') {
         return 'seat reserved';
@@ -212,6 +176,5 @@ button {
   font-size: 16px;
   cursor: pointer;
   border-radius: 8px;
-  color: red;
 }
 </style>
