@@ -194,6 +194,7 @@ export default {
 
 .seat.available {
   background-color: green;
+  background-image: url('src/picture/floor/1楼.jpg');
 }
 
 .seat.reserved {
