@@ -7,7 +7,7 @@
         <p>座位: {{ reservation.seatgroup+reservation.seatnumber }}</p>
         <p>预约时间: {{ reservation.time }} 分钟</p>
       </div>
-      <router-link to="/seat">返回</router-link>
+      <router-link to="/">返回</router-link>
     </div>
   </template>
   
