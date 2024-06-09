@@ -1,13 +1,15 @@
 <template>
   <div>
     <h2>选择食堂</h2>
-    <div v-for="canteen in canteens" :key="canteen" class="canteen-item">
-      <div class="canteen-content">
-        <!-- 图片路径设置要准确！！ -->
-        <img :src="`src/picture/canteen/${canteen}.jpg`" alt="加载中"> 
-        <button @click="selectCanteen(canteen)">
-          {{ canteen }}
-        </button>
+    <div class="container">
+      <div v-for="canteen in canteens" :key="canteen" class="canteen-item">
+        <div class="canteen-content">
+          <!-- 图片路径设置要准确！！ -->
+          <img :src="`src/picture/canteen/${canteen}.jpg`" alt="加载中"> 
+          <button @click="selectCanteen(canteen)">
+            {{ canteen }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -33,8 +35,18 @@ h2 {
   margin-bottom: 10px;
 }
 
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .canteen-item {
-  margin-bottom: 20px;
+  margin: 10px;
+  flex: 0 0 calc(33.333% - 20px);
+  /* 三列布局，每列占据宽度的三分之一，减去边距 */
+  box-sizing: border-box;
+  text-align: center;
 }
 
 /* 图片和文本打包成容器，便于管理排版 */

@@ -1,16 +1,16 @@
 <template>
-  <div>
     <h2>选择座位</h2>
-    <div v-for="group in seatGroups" :key="group.name" class="seat-group">
-      <h3>{{ group.name }} 组</h3>
-      <div class="seats">
-        <div v-for="seat in group.seats" :key="seat.number" :class="seatClass(seat)" @click="handleSeatClick(seat)">
-          {{ seat.number }}
+    <div class="container">
+      <div v-for="group in seatGroups" :key="group.name" class="seat-group">
+        <h3>{{ group.name }} 组</h3>
+        <div class="seats">
+          <div v-for="seat in group.seats" :key="seat.number" :class="seatClass(seat)" @click="handleSeatClick(seat)">
+            {{ seat.number }}
+          </div>
         </div>
       </div>
     </div>
     <button @click="goToSummary">查看预约</button>
-  </div>
 </template>
 
 <script>
@@ -22,10 +22,12 @@ export default {
         { name: 'A', seats: [] },
         { name: 'B', seats: [] },
         { name: 'C', seats: [] },
-        { name: 'D', seats: [] }
+        { name: 'D', seats: [] },
+        { name: 'E', seats: [] },
+        { name: 'F', seats: [] }
       ],
       reservations: [],
-      seatsPerGroup: 30 // 可以调整的参数
+      seatsPerGroup: 32 // 可以调整的参数
     };
   },
   computed: {
@@ -166,8 +168,16 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .seat-group {
-  margin-bottom: 20px;
+  flex: 0 0 calc(33.333% - 20px);
+  /* 三列布局，每列占据宽度的三分之一，减去边距 */
+  box-sizing: border-box;
   text-align: center;
 }
 
@@ -175,9 +185,9 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  max-width: 340px;
+  max-width: 340;
+  border: 1px black solid;
   /* 控制页面宽度以保证座位数量 */
-  margin: 0 auto;
 }
 
 .seat {
@@ -187,32 +197,37 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #000;
   cursor: pointer;
-  border-radius: 8px;
 }
 
 .seat.available {
-  background-color: green;
-  background-image: url('src/picture/floor/1楼.jpg');
+  /* background-color: green; */
+  background-image: url('src/picture/seat/seat2_0.png');
+  background-size: cover;
+  background-position: center;
 }
 
 .seat.reserved {
-  background-color: red;
+  /* background-color: red; */
+  background-image: url('src/picture/seat/seat2_2.png');
+  background-size: cover;
+  background-position: center;
   cursor: not-allowed;
 }
 
 .seat.ending {
-  background-color: yellow;
+  /* background-color: yellow; */
+  background-image: url('src/picture/seat/seat2_1.png');
+  background-size: cover;
+  background-position: center;
   cursor: not-allowed;
 }
 
 button {
-  margin-top: 20px;
+  margin: 30px;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
   border-radius: 8px;
-  color: red;
 }
 </style>

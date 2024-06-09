@@ -1,11 +1,13 @@
 <template>
   <div>
     <h2>选择楼层</h2>
-    <div v-for="floor in floors" :key="floor">
-      <div class="floor-content">
-      <img :src="`src/picture/floor/${floor}.jpg`" alt="加载中"> 
-      <button @click="selectFloor(floor)">{{ floor }}</button>
-    </div>
+    <div class="container">
+      <div v-for="floor in floors" :key="floor" class="floor-item">
+        <div class="floor-content">
+          <img :src="`src/picture/floor/${floor}.jpg`" alt="加载中"> 
+          <button @click="selectFloor(floor)">{{ floor }}</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -52,11 +54,20 @@ h2 {
   margin-bottom: 10px;
 }
 
-.floor-item {
-  margin-bottom: 20px;
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-/* 图片和文本打包成容器，便于管理排版 */
+.floor-item {
+  margin: 10px;
+  flex: 0 0 calc(33.333% - 20px);
+  /* 三列布局，每列占据宽度的三分之一，减去边距 */
+  box-sizing: border-box;
+  text-align: center;
+}
+
 .floor-content {
   display: flex;
   flex-direction: column;
@@ -69,7 +80,6 @@ img {
   height: 170px;
 }
 
-
 button {
   padding: 10px 20px;
   font-size: 16px;
@@ -77,4 +87,3 @@ button {
   border-radius: 8px;
 }
 </style>
- 
