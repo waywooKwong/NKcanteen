@@ -1,70 +1,5 @@
-<template>
-  <div id="backbody">
-    <div class="scroll-banner">
-      <div class="scroll-content">
-        欢迎来到NKcanteen！最新消息：食堂将于6月10日举行端午节特别活动，敬请期待！
-      </div>
-    </div>
-    <h1>NKcanteen</h1>
-    <h2>选择楼层</h2>
-    <div class="container">
-      <div v-for="floor in floors" :key="floor" class="floor-item">
-        <div class="floor-content">
-          <img :src="`src/picture/floor/${floor}.jpg`" alt="加载中" />
-          <button @click="selectFloor(floor)">{{ floor }}</button>
-        </div>
-      </div>
-    </div>
-    <div class="footer">
-      <p>本食堂负责人：理科组团</p>
-      <p>联系方式: 123-456-7890</p>
-      <p>地址: 天津市津南区同砚路38号</p>
-    </div>
-  </div>
-</template>
+/* 这里是座位选择功能共享的CSS样式集合 */
 
-<script>
-export default {
-  data() {
-    return {
-      floors: [],
-    };
-  },
-  computed: {
-    canteen() {
-      return this.$route.query.canteen;
-    },
-  },
-  watch: {
-    canteen: {
-      immediate: true,
-      handler(newCanteen) {
-        this.updateFloors(newCanteen);
-      },
-    },
-  },
-  methods: {
-    updateFloors(canteen) {
-      if (canteen === "食堂A") {
-        this.floors = ["1楼", "2楼", "3楼"];
-      } else if (canteen === "食堂B") {
-        this.floors = ["1楼", "2楼"];
-      } else if (canteen === "食堂C") {
-        this.floors = ["1楼"];
-      }
-    },
-    selectFloor(floor) {
-      this.$router.push({
-        path: "/seat",
-        query: { canteen: this.canteen, floor },
-      });
-    },
-  },
-};
-</script>
-
-<style src = "src/assets/seat.css"></style>
-<!-- <style scoped>
 #backbody {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   text-align: center;
@@ -81,6 +16,7 @@ export default {
 h1 {
   color: rgb(126,12,110);
 }
+
 h2 {
   margin-bottom: 10px;
 }
@@ -89,6 +25,21 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.canteen-item {
+  margin: 10px;
+  flex: 0 0 calc(33.333% - 20px);
+  /* 三列布局，每列占据宽度的三分之一，减去边距 */
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* 图片和文本打包成容器，便于管理排版 */
+.canteen-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .floor-item {
@@ -106,7 +57,7 @@ h2 {
 }
 
 img {
-  margin: 10px;
+  margin-bottom: 10px;
   width: 350px;
   height: 170px;
 }
@@ -116,6 +67,10 @@ button {
   font-size: 16px;
   cursor: pointer;
   border-radius: 8px;
+}
+
+button:hover{
+  background-color:rgb(126,12,110);
 }
 
 .scroll-banner {
@@ -155,4 +110,54 @@ button {
   font-size: 14px;
   z-index: 1000; /* 确保footer在最上层 */
 }
-</style> -->
+
+
+.seat-group {
+  flex: 0 0 calc(33.333% - 20px);
+  /* 三列布局，每列占据宽度的三分之一，减去边距 */
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.seats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 340;
+  border: 1px black solid;
+  /* 控制页面宽度以保证座位数量 */
+}
+
+.seat {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.seat.available {
+  /* background-color: green; */
+  background-image: url('src/picture/seat/seat2_0.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.seat.reserved {
+  /* background-color: red; */
+  background-image: url('src/picture/seat/seat2_2.png');
+  background-size: cover;
+  background-position: center;
+  cursor: not-allowed;
+}
+
+.seat.ending {
+  /* background-color: yellow; */
+  background-image: url('src/picture/seat/seat2_1.png');
+  background-size: cover;
+  background-position: center;
+  cursor: not-allowed;
+}
+

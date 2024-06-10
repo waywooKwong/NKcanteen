@@ -1,5 +1,11 @@
 <template>
-  <div>
+  <div id="backbody">
+    <div class="scroll-banner">
+      <div class="scroll-content">
+        欢迎来到NKcanteen！最新消息：食堂将于6月10日举行端午节特别活动，敬请期待！
+      </div>
+    </div>
+    <h1>NKcanteen</h1>
     <h2>选择食堂</h2>
     <div class="container">
       <div v-for="canteen in canteens" :key="canteen" class="canteen-item">
@@ -11,6 +17,11 @@
           </button>
         </div>
       </div>
+    </div>
+    <div class="footer">
+      <p>食堂负责人：大厨小组</p>
+      <p>联系方式: 123-456-7890</p>
+      <p>地址: 天津市津南区同砚路38号</p>
     </div>
   </div>
 </template>
@@ -30,42 +41,4 @@ export default {
 };
 </script>
 
-<style scoped>
-h2 {
-  margin-bottom: 10px;
-}
-
-.container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.canteen-item {
-  margin: 10px;
-  flex: 0 0 calc(33.333% - 20px);
-  /* 三列布局，每列占据宽度的三分之一，减去边距 */
-  box-sizing: border-box;
-  text-align: center;
-}
-
-/* 图片和文本打包成容器，便于管理排版 */
-.canteen-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-img {
-  margin-bottom: 10px;
-  width: 350px;
-  height: 170px;
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 8px;
-}
-</style>
+<style src = "src/assets/seat.css"></style>

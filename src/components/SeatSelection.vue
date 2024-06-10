@@ -1,4 +1,11 @@
 <template>
+  <div id="backbody">
+    <div class="scroll-banner">
+      <div class="scroll-content">
+        欢迎来到NKcanteen！最新消息：食堂将于6月10日举行端午节特别活动，敬请期待！
+      </div>
+    </div>
+    <h1>NKcanteen</h1>
     <h2>选择座位</h2>
     <div class="container">
       <div v-for="group in seatGroups" :key="group.name" class="seat-group">
@@ -10,7 +17,14 @@
         </div>
       </div>
     </div>
+    <div class="footer">
+      <p>本楼层负责人：楼层负责人</p>
+      <p>联系方式: 123-456-7890</p>
+      <p>地址: 天津市津南区同砚路38号</p>
+    </div>
     <button @click="goToSummary">查看预约</button>
+  </div>
+
 </template>
 
 <script>
@@ -167,62 +181,11 @@ export default {
 };
 </script>
 
+<!-- 引入外部样式表 -->
+<style src="../assets/seat.css"></style>
+
+<!-- 定义局部样式 -->
 <style scoped>
-.container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.seat-group {
-  flex: 0 0 calc(33.333% - 20px);
-  /* 三列布局，每列占据宽度的三分之一，减去边距 */
-  box-sizing: border-box;
-  text-align: center;
-}
-
-.seats {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 340;
-  border: 1px black solid;
-  /* 控制页面宽度以保证座位数量 */
-}
-
-.seat {
-  width: 40px;
-  height: 40px;
-  margin: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.seat.available {
-  /* background-color: green; */
-  background-image: url('src/picture/seat/seat2_0.png');
-  background-size: cover;
-  background-position: center;
-}
-
-.seat.reserved {
-  /* background-color: red; */
-  background-image: url('src/picture/seat/seat2_2.png');
-  background-size: cover;
-  background-position: center;
-  cursor: not-allowed;
-}
-
-.seat.ending {
-  /* background-color: yellow; */
-  background-image: url('src/picture/seat/seat2_1.png');
-  background-size: cover;
-  background-position: center;
-  cursor: not-allowed;
-}
-
 button {
   margin: 30px;
   padding: 10px 20px;
