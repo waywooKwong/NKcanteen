@@ -9,10 +9,10 @@
       />
     </transition>
     <div class="options">
-      <p @mouseover="changeImg('img1')" @click="chooseSeat" class="option">
+      <p @mouseover="changeImg('img2')" @click="chooseSeat" class="option">
         座位预定
       </p>
-      <p @mouseover="changeImg('img2')" @click="chooseDish" class="option">
+      <p @mouseover="changeImg('img1')" @click="chooseDish" class="option">
         菜品选择
       </p>
     </div>
@@ -23,10 +23,10 @@
 export default {
   data() {
     return {
-      currentImg: '/src/assets/images/img1.jpg',
+      currentImg: '/src/assets/images/select/img1.jpg',
       img: {
-        img1: '/src/assets/images/img1.jpg',
-        img2: '/src/assets/images/img2.jpg',
+        img1: '/src/assets/images/select/img1.jpg',
+        img2: '/src/assets/images/select/img2.jpg',
       },
     }
   },

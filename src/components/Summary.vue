@@ -13,7 +13,7 @@
         预约时间: {{ reservation.time }} 分钟
       </div>
     </div>
-    <router-link to="/" class="text">返回</router-link>
+    <router-link to="/order" class="text">前往点餐</router-link>
   </div>
 </template>
 
