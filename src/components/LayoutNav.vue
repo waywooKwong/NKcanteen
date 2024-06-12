@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+import { useStore } from 'vuex'
+const store = useStore()
+const windowID = store.state.windowID
+</script>
 
 <template>
   <nav class="app-topnav">
@@ -6,7 +10,7 @@
       <ul>
         <template v-if="true">
           <li>
-            <a href="javascript:;"><i class="iconfont icon-user"></i>周杰伦</a>
+            <a href="javascript:;"><i class="iconfont icon-user"></i>窗口{{windowID}}</a>
           </li>
           <li>
             <el-popconfirm
@@ -15,11 +19,14 @@
               cancel-button-text="取消"
             >
               <template #reference>
-                <a href="javascript:;">退出登录</a>
+                <router-link :to="{ path: '/registeradmin' }">
+                  <a href="javascript:;">退出登录</a>
+                </router-link>
+                
               </template>
             </el-popconfirm>
           </li>
-          <li><a href="javascript:;">我的窗口</a></li>
+          <li><a href="javascript:;">我的消息</a></li>
           <li><a href="javascript:;">反馈中心</a></li>
         </template>
         <template v-else>

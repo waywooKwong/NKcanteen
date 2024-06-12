@@ -9,8 +9,15 @@ import LayoutFixed from '@/components/LayoutFixed.vue'
   <layout-fixed></layout-fixed>
   <LayoutNav></LayoutNav>
   <LayoutHeader></LayoutHeader>
+    <div class="spacer"></div>
   <RouterView />
   <LayoutFooter></LayoutFooter>
 </template>
 
-<style scoped></style>
+<style scoped>
+.spacer {
+  height: 20px;
+  background-color: #f8f8f8;
+}
+</style>
+

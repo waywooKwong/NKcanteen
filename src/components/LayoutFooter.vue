@@ -40,7 +40,7 @@
           </a>
           <a href="javascript:;">
             <i class="iconfont icon-footer02"></i>
-            <span>物流快捷</span>
+            <span>好评如潮</span>
           </a>
           <a href="javascript:;">
             <i class="iconfont icon-footer03"></i>

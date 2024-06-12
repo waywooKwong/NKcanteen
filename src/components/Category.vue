@@ -1,6 +1,6 @@
 <template>
   <router-view></router-view>
-  <div class="top-category">
+  <div class="top-category">  
     <div class="container m-top-20">
       <!-- 面包屑 -->
       <div class="bread-container">
@@ -105,53 +105,59 @@
 
       <!-- 窗口管理 -->
       <div v-if="categoryId === '2'" class="window-management">
-        <h2>窗口管理</h2>
-        <div>
-          <div>
-            <div>窗口ID：{{ windowID }}</div>
-            <div>
-              食堂：{{ myWindow.canteen !== null ? myWindow.canteen : 'null' }}
-            </div>
-            <div>
-              楼层：{{ myWindow.floor !== null ? myWindow.floor : 'null' }}
-            </div>
-            <div>
-              负责人电话：{{
-                myWindow.manager_phone !== null
-                  ? myWindow.manager_phone
-                  : 'null'
-              }}
-            </div>
-            <div>
-              负责人邮箱：{{
-                myWindow.manager_email !== null
-                  ? myWindow.manager_email
-                  : 'null'
-              }}
-            </div>
-            <div>
-              负责人微信：{{
-                myWindow.manager_wechat !== null
-                  ? myWindow.manager_wechat
-                  : 'null'
-              }}
-            </div>
-            <div>
-              窗口名称：{{
-                myWindow.window_name !== null ? myWindow.window_name : 'null'
-              }}
-            </div>
-            <el-button @click="removeWindow(myWindow.window_id)" type="primary">
-              <el-icon><Delete /></el-icon>
-              删除
-            </el-button>
-          </div>
-        </div>
+          <h2>窗口信息
+            <el-button @click="showEditForm = true">修改</el-button>
+          </h2>
+          <el-descriptions
+            :title="''"
+            :column="2"
+            :size="size"
+            border
+          >
+            <el-descriptions-item label="窗口ID">{{ windowID }}</el-descriptions-item>
+            <el-descriptions-item label="食堂">{{ myWindow.canteen  }}</el-descriptions-item>
+            <el-descriptions-item label="楼层">{{ myWindow.floor  }}</el-descriptions-item>
+            <el-descriptions-item label="负责人电话">{{ myWindow.manager_phone }}</el-descriptions-item>
+            <el-descriptions-item label="负责人邮箱">{{ myWindow.manager_email  }}</el-descriptions-item>
+            <el-descriptions-item label="负责人微信">{{ myWindow.manager_wechat }}</el-descriptions-item>
+            <el-descriptions-item label="窗口名称">{{ myWindow.window_name  }}</el-descriptions-item>
+          </el-descriptions>
+          
+          <!-- 修改窗口信息对话框 -->
+          <el-dialog v-model="showEditForm" title="修改窗口信息" width="500">
+            <template #footer>
+              <div class="edit-item-form">
+                <form @submit.prevent="editWindow">
+                  <label>食堂：
+                    <input type="text" v-model="editWindowData.canteen" placeholder="请输入食堂名称" />
+                  </label>
+                  <label>楼层：
+                    <input type="number" v-model="editWindowData.floor" placeholder="请输入楼层" />
+                  </label>
+                  <label>负责人电话：
+                    <input type="text" v-model="editWindowData.manager_phone" placeholder="请输入负责人电话" />
+                  </label>
+                  <label>负责人邮箱：
+                    <input type="email" v-model="editWindowData.manager_email" placeholder="请输入负责人邮箱" />
+                  </label>
+                  <label>负责人微信：
+                    <input type="text" v-model="editWindowData.manager_wechat" placeholder="请输入负责人微信" />
+                  </label>
+                  <label>窗口名称：
+                    <input type="text" v-model="editWindowData.window_name" placeholder="请输入窗口名称" />
+                  </label>
+                  <button type="submit">保存</button>
+                  <button type="button" @click="showEditForm = false" >取消</button>
+                </form>
+              </div>
+            </template>
+          </el-dialog>
       </div>
+
 
       <!-- 排队系统 -->
       <div v-if="categoryId === '3'" class="queue-system">
-        <h2>排队系统</h2>
+        <h2>我的订单</h2>
         <ul>
           <li v-for="order in orders" :key="order.id">
             <div>订单号：{{ order.id }}</div>
@@ -165,11 +171,33 @@
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted, watch } from 'vue'
+<script setup lang="ts">
+import { ref, onMounted, watch,computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import { useStore } from 'vuex'
+import type { ComponentSize } from 'element-plus'
+const size = ref<ComponentSize>('default')
+  const iconStyle = computed(() => {
+  const marginMap = {
+    large: '8px',
+    default: '6px',
+    small: '4px',
+  }
+  return {
+    marginRight: marginMap[size.value] || marginMap.default,
+  }
+})
+const blockMargin = computed(() => {
+  const marginMap = {
+    large: '32px',
+    default: '28px',
+    small: '24px',
+  }
+  return {
+    marginTop: marginMap[size.value] || marginMap.default,
+  }
+})
 
 // 分类数据，包含 ID 和名称
 const categories = [
@@ -189,6 +217,7 @@ const colors = ref(['#99A9BF', '#F7BA2A', '#FF9900'])
 
 const showAddForm = ref(false)
 const showDetailDialog = ref(false)
+const showEditForm=ref(false)
 const route = useRoute()
 const router = useRouter()
 const store = useStore()
@@ -204,8 +233,15 @@ const newItem = ref({
   price: 0,
   image: null,
 })
-
-const myWindow = {
+const editWindowData = ref({
+  canteen: '',
+  floor: 0,
+  manager_phone: '',
+  manager_email: '',
+  manager_wechat: '',
+  window_name: '',
+})
+const myWindow = ref({
   window_id: windowID,
   canteen: '',
   floor: 0,
@@ -213,25 +249,34 @@ const myWindow = {
   manager_email: '',
   manager_wechat: '',
   window_name: '',
-}
+})
 
 // 获取窗口数据
 function fetchWindows(windowID) {
+  console.log('Fetching window with ID:', windowID); // 添加调试信息
   axios
     .get(`http://localhost:3000/window`, { params: { windowID } })
     .then((response) => {
-      const windowData = response.data
-      myWindow.window_id = windowData.window_id
-      myWindow.canteen = windowData.canteen
-      myWindow.floor = windowData.floor
-      myWindow.manager_phone = windowData.manager_phone
-      myWindow.manager_email = windowData.manager_email
-      myWindow.manager_wechat = windowData.manager_wechat
-      myWindow.window_name = windowData.window_name
+      const windowData = response.data[0]; // 获取数组中的第一个对象
+      console.log('API response:', windowData); // 打印 API 响应
+
+      // 检查 windowData 是否存在并包含预期的属性
+      if (windowData) {
+        myWindow.value.window_id = windowData.window_id || '';
+        myWindow.value.canteen = windowData.canteen || '';
+        myWindow.value.floor = windowData.floor || 0;
+        myWindow.value.manager_phone = windowData.manager_phone || '';
+        myWindow.value.manager_email = windowData.manager_email || '';
+        myWindow.value.manager_wechat = windowData.manager_wechat || '';
+        myWindow.value.window_name = windowData.window_name || '';
+        console.log('Updated myWindow:', myWindow.value); // 打印更新后的 myWindow
+      } else {
+        console.error('No window data found');
+      }
     })
     .catch((error) => {
-      console.error('Failed to fetch window:', error)
-    })
+      console.error('Failed to fetch window:', error);
+    });
 }
 
 // 在 onMounted 和 afterEach 中调用 fetchWindows
@@ -311,7 +356,7 @@ const addItem = () => {
     const formData = new FormData()
     formData.append('win_id', newItem.value.win_id)
     formData.append('name', newItem.value.name)
-    formData.append('price', newItem.value.price)
+    formData.append('price', String(newItem.value.price))
     formData.append('image', newItem.value.image)
 
     // 发送 POST 请求到后端
@@ -325,7 +370,7 @@ const addItem = () => {
         console.log(response.data)
         newItem.value.image = response.data.imageUrl
         // 添加完毕后清空表单数据
-        newItem.value = { name: '', price: 0, image: null }
+        newItem.value = { win_id :windowID ,name: '', price: 0, image: null }
         showAddForm.value = false // 关闭表单
         fetchMenu()
       })
@@ -351,17 +396,46 @@ const removeItem = (index) => {
     })
 }
 
+const editWindow = () => {
+      const windowData = {
+        windowid: windowID,
+        canteen: editWindowData.value.canteen,
+        floor: editWindowData.value.floor,
+        manager_phone: editWindowData.value.manager_phone,
+        manager_email: editWindowData.value.manager_email,
+        manager_wechat: editWindowData.value.manager_wechat,
+        window_name: editWindowData.value.window_name
+    };
+
+    axios
+        .post('http://localhost:3000/windowupdate', windowData )
+        .then((response) => {
+            console.log(response.data);
+            showEditForm.value = false; // 关闭表单
+            fetchWindows(windowID);
+        })
+        .catch((error) => {
+            console.error('There was an error!', error);
+        });
+};
+
+
 // 处理上传文件变化
 const handleFileChange = (event) => {
   newItem.value.image = event.target.files[0]
 }
+
+
+
 </script>
 
 <style scoped lang="scss">
 @import '@/styles/common.scss';
 .top-category {
   .container {
+    margin-bottom: 20px;
     .bread-container {
+      margin-top:20px;
       margin-bottom: 20px;
     }
 
@@ -375,6 +449,18 @@ const handleFileChange = (event) => {
       gap: 20px;
     }
 
+    .window-management{
+        .el-descriptions {
+          margin-top: 30px;
+        }
+        .cell-item {
+          display: flex;
+          align-items: center;
+        }
+        .margin-top {
+          margin-top: 30px;
+        }
+    }
     .menu-list {
       flex: 1;
 
@@ -555,6 +641,52 @@ const handleFileChange = (event) => {
 
           div {
             margin-bottom: 5px;
+          }
+        }
+      }
+    }
+    .edit-item-form{
+      flex: 1;
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-width: 400px;
+        margin-top: 20px;
+
+        label {
+          font-size: 16px;
+          color: #333;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+
+          input {
+            width: 400px;
+            margin-top: 5px;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+          }
+        }
+
+        button {
+          background: #b20197;
+          color: white;
+          border: none;
+          padding: 10px;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: background 0.3s;
+
+          &:hover {
+            background: #c600c3;
+          }
+
+          &:not(:last-child) {
+            margin-bottom: 10px;
           }
         }
       }

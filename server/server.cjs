@@ -157,7 +157,7 @@ const upload = multer({ storage: storage });
 app.post('/dishes', upload.single('image'), (req, res) => {
     const { win_id, name, price } = req.body;
     const imageUrl = `/${req.file.filename}`;
-
+    console.log('收到的数据：', req.body);
     const sql = 'INSERT INTO front_menu (win_id,name, price, image) VALUES (?, ?, ?, ?)';
     db.query(sql, [win_id, name, price, imageUrl], (err, result) => {
         if (err) {
@@ -167,6 +167,22 @@ app.post('/dishes', upload.single('image'), (req, res) => {
         res.status(201).send({ message: 'Dish saved successfully', imageUrl });
     });
 });
+
+app.post('/windowupdate', (req, res) => {
+    const { windowid, canteen, floor, manager_phone, manager_email, manager_wechat, window_name } = req.body;
+    console.log('收到的窗口数据：', req.body); // 添加此行
+    const sql = 'UPDATE windows SET canteen = ?, floor = ?, manager_phone = ?, manager_email = ?, manager_wechat = ?, window_name = ? WHERE window_id = ?';
+    db.query(sql, [canteen, floor, manager_phone, manager_email, manager_wechat, window_name, windowid], (err, result) => {
+      if (err) {
+        console.error('更新窗口信息时出错：', err); // 添加此行
+        res.status(500).send({ error: 'Failed to update window' });
+        return;
+      }
+      console.log('窗口信息更新成功'); // 添加此行
+      res.status(201).send({ message: 'window update successfully', canteen });
+    });
+  });
+  
 
 //查询当前窗口菜单
 app.get('/dishes', (req, res) => {
@@ -190,7 +206,7 @@ app.get('/dishes', (req, res) => {
 // 获取指定窗口数据
 app.get('/window', (req, res) => {
     const windowID = req.query.windowID;
-  
+    console.log(windowID)
     if (!windowID) {
       res.status(400).send({ error: 'windowID is required' });
       return;
@@ -202,6 +218,7 @@ app.get('/window', (req, res) => {
         res.status(500).send({ error: 'Failed to fetch windows' });
         return;
       }
+      console.log(result)
       res.json(result); // 将窗口数据作为 JSON 对象发送回客户端
     });
   });
