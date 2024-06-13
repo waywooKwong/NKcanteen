@@ -11,9 +11,9 @@ const port = 3000; // 这是固定的端口，最好不要修改
 // 2. 根据需求 create table
 const db = mysql.createConnection({
     host: 'localhost',
-    user: 'QT',
-    password: '1234',
-    database: 'dblab01' //注意在 SCHEMAS 确认
+    user: 'canteen',
+    password: '',
+    database: 'dbcanteen' //注意在 SCHEMAS 确认
 });
 
 db.connect((err) => {
@@ -140,11 +140,10 @@ app.post('/loginadmin', (req, res) => {
       }
     });
   });
-  
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'public/');
+        cb(null, path.join(__dirname, '..', 'public', 'dishes'));
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname));
@@ -153,12 +152,16 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-
 app.post('/dishes', upload.single('image'), (req, res) => {
+    console.log(req.file); // 打印req.file对象，查看其结构和属性
+    if (!req.file || !req.file.filename) {
+        res.status(400).send({ error: 'No file uploaded or filename not found' });
+        return;
+    }
     const { win_id, name, price } = req.body;
-    const imageUrl = `/${req.file.filename}`;
+    const imageUrl = `/dishes/${req.file.filename}`;
     console.log('收到的数据：', req.body);
-    const sql = 'INSERT INTO front_menu (win_id,name, price, image) VALUES (?, ?, ?, ?)';
+    const sql = 'INSERT INTO front_menu (win_id, name, price, image) VALUES (?, ?, ?, ?)';
     db.query(sql, [win_id, name, price, imageUrl], (err, result) => {
         if (err) {
             res.status(500).send({ error: 'Failed to save dish' });
@@ -167,6 +170,7 @@ app.post('/dishes', upload.single('image'), (req, res) => {
         res.status(201).send({ message: 'Dish saved successfully', imageUrl });
     });
 });
+
 
 app.post('/windowupdate', (req, res) => {
     const { windowid, canteen, floor, manager_phone, manager_email, manager_wechat, window_name } = req.body;
