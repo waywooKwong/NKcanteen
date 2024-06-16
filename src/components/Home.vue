@@ -1,4 +1,6 @@
 <template>
+  <header class="page-title">NK Canteen</header>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Courgette&family=Dancing+Script&display=swap" rel="stylesheet">
   <div class="button-container">
     <button type="button" class="userRegister" @click="userRegister">
       用户登录
@@ -10,7 +12,7 @@
 </template>
 
 <script>
-import bkImg from '@/assets/background01.jpg'
+import bkImg from '@/assets/nk.jpg'
 export default {
   data() {
     return {
@@ -40,6 +42,18 @@ export default {
 </script>
 
 <style scoped>
+.page-title {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-family: 'Courgette', 'Dancing Script', 'Arial', sans-serif; /* 设置多种字体备选方案 */
+  font-size: 5em;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+
 .button-container {
   display: flex;
   justify-content: center;
