@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import bkImg from '@/assets/bk_img.jpg'
+import bkImg from '@/assets/background01.jpg'
 export default {
   data() {
     return {
@@ -29,6 +29,9 @@ export default {
   mounted() {
     document.body.style.backgroundSize = 'cover'
     document.body.style.backgroundImage = `url(${bkImg})`
+    document.body.style.backgroundPosition = 'center';
+  document.body.style.backgroundRepeat = 'no-repeat';
+
   },
   beforeUnmount() {
     document.body.style.backgroundImage = ''

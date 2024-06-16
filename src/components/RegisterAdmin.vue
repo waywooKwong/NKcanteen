@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import bkImg from '@/assets/bk_img.jpg'
+import bkImg from '@/assets/background02.jpg'
 import axios from 'axios'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'

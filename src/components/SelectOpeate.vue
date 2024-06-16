@@ -82,7 +82,7 @@ body {
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+  background: linear-gradient(120deg,#7E0C6E 0%, #C0C0C0 100%);
 }
 
 .options {
@@ -103,7 +103,7 @@ body {
 }
 
 .option:hover {
-  color: #007bff;
+  color: #FFFFFF;
 }
 
 .background-img {
