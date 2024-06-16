@@ -10,7 +10,9 @@ const windowID = store.state.windowID
       <ul>
         <template v-if="true">
           <li>
-            <a href="javascript:;"><i class="iconfont icon-user"></i>窗口{{windowID}}</a>
+            <a href="javascript:;"
+              ><i class="iconfont icon-user"></i>窗口{{ windowID }}</a
+            >
           </li>
           <li>
             <el-popconfirm
@@ -22,7 +24,6 @@ const windowID = store.state.windowID
                 <router-link :to="{ path: '/registeradmin' }">
                   <a href="javascript:;">退出登录</a>
                 </router-link>
-                
               </template>
             </el-popconfirm>
           </li>

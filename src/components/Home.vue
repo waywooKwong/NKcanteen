@@ -1,6 +1,9 @@
 <template>
   <header class="page-title">NK Canteen</header>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Courgette&family=Dancing+Script&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Pacifico&family=Courgette&family=Dancing+Script&display=swap"
+    rel="stylesheet"
+  />
   <div class="button-container">
     <button type="button" class="userRegister" @click="userRegister">
       用户登录
@@ -31,9 +34,8 @@ export default {
   mounted() {
     document.body.style.backgroundSize = 'cover'
     document.body.style.backgroundImage = `url(${bkImg})`
-    document.body.style.backgroundPosition = 'center';
-  document.body.style.backgroundRepeat = 'no-repeat';
-
+    document.body.style.backgroundPosition = 'center'
+    document.body.style.backgroundRepeat = 'no-repeat'
   },
   beforeUnmount() {
     document.body.style.backgroundImage = ''
@@ -51,7 +53,7 @@ export default {
   font-family: 'Courgette', 'Dancing Script', 'Arial', sans-serif; /* 设置多种字体备选方案 */
   font-size: 5em;
   font-weight: bold;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .button-container {

@@ -9,7 +9,7 @@ import LayoutFixed from '@/components/LayoutFixed.vue'
   <layout-fixed></layout-fixed>
   <LayoutNav></LayoutNav>
   <LayoutHeader></LayoutHeader>
-    <div class="spacer"></div>
+  <div class="spacer"></div>
   <RouterView />
   <LayoutFooter></LayoutFooter>
 </template>
@@ -20,4 +20,3 @@ import LayoutFixed from '@/components/LayoutFixed.vue'
   background-color: #f8f8f8;
 }
 </style>
-
