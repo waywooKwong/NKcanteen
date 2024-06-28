@@ -1,14 +1,12 @@
 <template>
   <header class="page-title">NK Canteen</header>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Pacifico&family=Courgette&family=Dancing+Script&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Courgette&family=Dancing+Script&display=swap"
+    rel="stylesheet" />
   <div class="button-container">
-    <button type="button" class="userRegister" @click="userRegister">
+    <button type="button" class="userLogin" @click="userLogin">
       用户登录
     </button>
-    <button type="button" class="adminRegister" @click="adminRegister">
+    <button type="button" class="adminLogin" @click="adminLogin">
       管理员登录
     </button>
   </div>
@@ -24,11 +22,11 @@ export default {
     }
   },
   methods: {
-    userRegister() {
-      this.$router.push('/registeruser')
+    userLogin() {
+      this.$router.push('/LoginUser')
     },
-    adminRegister() {
-      this.$router.push('/registeradmin')
+    adminLogin() {
+      this.$router.push('/LoginAdmin')
     },
   },
   mounted() {
@@ -50,7 +48,8 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
-  font-family: 'Courgette', 'Dancing Script', 'Arial', sans-serif; /* 设置多种字体备选方案 */
+  font-family: 'Courgette', 'Dancing Script', 'Arial', sans-serif;
+  /* 设置多种字体备选方案 */
   font-size: 5em;
   font-weight: bold;
   color: #ffffff;
@@ -83,23 +82,23 @@ button:hover {
   background-color: #45a049;
 }
 
-.userRegister {
+.userLogin {
   margin-right: 50px;
   background-color: #008cba;
   /* Blue */
 }
 
-.userRegister:hover {
+.userLogin:hover {
   background-color: #007bb5;
 }
 
-.adminRegister {
+.adminLogin {
   margin-left: 50px;
   background-color: #f44336;
   /* Red */
 }
 
-.adminRegister:hover {
+.adminLogin:hover {
   background-color: #e53935;
 }
 </style>

@@ -11,12 +11,7 @@
       <div v-for="group in seatGroups" :key="group.name" class="seat-group">
         <h3>{{ group.name }} 组</h3>
         <div class="seats">
-          <div
-            v-for="seat in group.seats"
-            :key="seat.number"
-            :class="seatClass(seat)"
-            @click="handleSeatClick(seat)"
-          >
+          <div v-for="seat in group.seats" :key="seat.number" :class="seatClass(seat)" @click="handleSeatClick(seat)">
             {{ seat.number }}
           </div>
         </div>
@@ -204,7 +199,7 @@ export default {
 </script>
 
 <!-- 引入外部样式表 -->
-<style src="../assets/seat.css" scoped></style>
+<style src="../../assets/seat.css" scoped></style>
 
 <!-- 定义局部样式 -->
 <style scoped>

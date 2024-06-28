@@ -1,18 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import RegisterUser from '@/components/RegisterUser.vue'
-import InitUser from '@/components/InitUser.vue'
-import Home from '@/components/Home.vue'
-import CanteenSelection from '@/components/CanteenSelection.vue'
-import FloorSelection from '@/components/FloorSelection.vue'
-import SeatSelection from '@/components/SeatSelection.vue'
-import Summary from '@/components/Summary.vue'
-import Layout from '@/components/Admin.vue'
-import Category from '@/components/Category.vue'
-import LayoutHome from '@/components/LayoutHome.vue'
-import RegisterAdmin from '@/components/RegisterAdmin.vue'
-import InitAdmin from '@/components/InitAdmin.vue'
-import SelectOpeate from '@/components/SelectOpeate.vue'
-import Order from '@/components/Order.vue'
+import LoginUser from '@/components/LoginComponets/LoginUser.vue'
+import RegisterUser from '@/components/RegisterComponets/RegisterUser.vue'
+import Home from '@/components/LoginComponets/Home.vue'
+import CanteenSelection from '@/components/UserComponets/CanteenSelection.vue'
+import FloorSelection from '@/components/UserComponets/FloorSelection.vue'
+import SeatSelection from '@/components/UserComponets/SeatSelection.vue'
+import Summary from '@/components/UserComponets/Summary.vue'
+import Layout from '@/components/AdminComponets/Admin.vue'
+import Category from '@/components/UserComponets/Category.vue'
+import LayoutHome from '@/components/AdminComponets/LayoutHome.vue'
+import LoginAdmin from '@/components/LoginComponets/LoginAdmin.vue'
+import RegisterAdmin from '@/components/RegisterComponets/RegisterAdmin.vue'
+import SelectOpeate from '@/components/UserComponets/SelectOpeate.vue'
+import Order from '@/components/UserComponets/Order.vue'
 const routes = [
   {
     path: '/',
@@ -23,16 +23,16 @@ const routes = [
     component: Home,
   },
   {
-    path: '/registeruser',
+    path: '/LoginUser',
+    component: LoginUser,
+  },
+  {
+    path: '/LoginAdmin',
+    component: LoginAdmin,
+  },
+  {
+    path: '/RegisterUser',
     component: RegisterUser,
-  },
-  {
-    path: '/registeradmin',
-    component: RegisterAdmin,
-  },
-  {
-    path: '/inituser',
-    component: InitUser,
   },
   {
     path: '/canteen',
@@ -70,8 +70,8 @@ const routes = [
     props: true,
   },
   {
-    path: '/initadmin',
-    component: InitAdmin,
+    path: '/RegisterAdmin',
+    component: RegisterAdmin,
   },
   {
     path: '/selectopeate',

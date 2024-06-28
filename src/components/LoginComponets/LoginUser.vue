@@ -1,25 +1,13 @@
 <template>
   <div class="mainWindow">
     <div class="registerTitle">{{ login }}</div>
-    <input
-      type="text"
-      class="adminname"
-      v-model="adminname"
-      placeholder="在此处输入管理员用户名"
-    />
-    <input
-      type="password"
-      class="password"
-      v-model="password"
-      placeholder="在此处输入密码"
-    />
+    <input type="text" class="username" v-model="username" placeholder="在此处输入用户名" />
+    <input type="password" class="password" v-model="password" placeholder="在此处输入密码" />
     <button type="submit" class="btn_submit" @click="loginUser">登录</button>
     <div class="check-container">
       <input type="checkbox" class="btn_check" v-model="checkbox" />
       <label for="checkbox" class="label_check">记住密码</label>
-      <p class="fgPassword" @click="register">
-        <RouterLink to="/initadmin">点我注册</RouterLink>
-      </p>
+      <p class="fgPassword" @click="registerUser">点我注册</p>
     </div>
   </div>
 </template>
@@ -27,27 +15,26 @@
 <script>
 import bkImg from '@/assets/background02.jpg'
 import axios from 'axios'
-import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
-import { ref, onMounted, onBeforeUnmount } from 'vue'
 
 export default {
-  setup() {
-    const adminname = ref('')
-    const password = ref('')
-    const checkbox = ref(false)
-    const login = ref('Login')
-    const store = useStore() // 获取 Vuex store 实例
-    const router = useRouter()
-    const loginUser = () => {
-      if (adminname.value === '' || password.value === '') {
+  data() {
+    return {
+      username: '',
+      password: '',
+      checkbox: false,
+      login: 'Login',
+    }
+  },
+  methods: {
+    loginUser() {
+      if (this.username === '' || this.password === '') {
         alert('用户名或密码不能为空')
         return
       }
       axios
-        .post('http://localhost:3000/loginadmin', {
-          adminname: adminname.value,
-          password: password.value,
+        .post('http://localhost:3000/loginuser', {
+          username: this.username,
+          password: this.password,
         })
         .then((res) => {
           if (res.data.success) {
@@ -55,8 +42,7 @@ export default {
             console.log(res.data)
 
             if (jump) {
-              store.commit('setWindowID', res.data.windowID) // 调用 mutation 更新 windowID
-              router.push({ path: '/admin' })
+              this.$router.push('/canteen')
             } else {
               console.log('success!')
             }
@@ -68,30 +54,18 @@ export default {
           console.log(err)
           alert('登录失败，请检查服务器连接')
         })
-    }
-
-    const register = () => {
-      this.$router.push('/initadmin')
+    },
+    registerUser() {
+      this.$router.push('/RegisterUser')
       console.log('hello')
-    }
-
-    onMounted(() => {
-      document.body.style.backgroundSize = 'cover'
-      document.body.style.backgroundImage = `url(${bkImg})`
-    })
-
-    onBeforeUnmount(() => {
-      document.body.style.backgroundImage = ''
-    })
-
-    return {
-      adminname,
-      password,
-      checkbox,
-      login,
-      loginUser,
-      register,
-    }
+    },
+  },
+  mounted() {
+    document.body.style.backgroundSize = 'cover'
+    document.body.style.backgroundImage = `url(${bkImg})`
+  },
+  beforeUnmount() {
+    document.body.style.backgroundImage = ''
   },
 }
 </script>
@@ -108,11 +82,9 @@ body {
   margin: 200px auto;
   width: 400px;
   height: 450px;
-  background: linear-gradient(
-    135deg,
-    rgba(168, 237, 234, 0.8) 0%,
-    rgba(254, 214, 227, 0.8) 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(168, 237, 234, 0.8) 0%,
+      rgba(254, 214, 227, 0.8) 100%);
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -128,7 +100,7 @@ body {
   font-size: 36px;
 }
 
-.adminname,
+.username,
 .password {
   width: 300px;
   height: 40px;
@@ -141,18 +113,18 @@ body {
   transition: all 0.3s ease;
 }
 
-.adminname:focus,
+.username:focus,
 .password:focus {
   border-color: #6200ea;
   box-shadow: 0 2px 4px rgba(98, 0, 234, 0.2);
 }
 
-.adminname::placeholder,
+.username::placeholder,
 .password::placeholder {
   color: #aaa;
 }
 
-.adminname:hover,
+.username:hover,
 .password:hover {
   border-color: #6200ea;
 }

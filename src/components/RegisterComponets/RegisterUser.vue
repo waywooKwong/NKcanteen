@@ -1,23 +1,13 @@
 <template>
   <div class="mainWindow">
     <div class="registerTitle">{{ login }}</div>
-    <input
-      type="text"
-      class="username"
-      v-model="username"
-      placeholder="在此处输入注册用户名"
-    />
-    <input
-      type="password"
-      class="password"
-      v-model="password"
-      placeholder="在此处输入注册密码"
-    />
+    <input type="text" class="username" v-model="username" placeholder="在此处输入注册用户名" />
+    <input type="password" class="password" v-model="password" placeholder="在此处输入注册密码" />
     <button type="submit" class="btn_submit" @click="registerUser">
       注册新用户
     </button>
     <div class="check-container">
-      <p class="backRegister" @click="register">返回登录</p>
+      <p class="backRegister" @click="LoginUser">返回登录</p>
     </div>
   </div>
 </template>
@@ -52,7 +42,7 @@ export default {
         .then((res) => {
           if (res.data.success) {
             alert('注册成功')
-            this.$router.push('/registeruser')
+            this.$router.push('/LoginUser')
           } else {
             alert('请重新设置用户名即密码')
           }
@@ -62,8 +52,8 @@ export default {
           alert('注册失败，请重试')
         })
     },
-    register() {
-      this.$router.push('/registeruser')
+    LoginUser() {
+      this.$router.push('/LoginUser')
       console.log('hello')
     },
   },
@@ -82,11 +72,9 @@ export default {
   margin: 200px auto;
   width: 400px;
   height: 450px;
-  background: linear-gradient(
-    135deg,
-    rgba(168, 237, 234, 0.8) 0%,
-    rgba(254, 214, 227, 0.8) 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(168, 237, 234, 0.8) 0%,
+      rgba(254, 214, 227, 0.8) 100%);
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
