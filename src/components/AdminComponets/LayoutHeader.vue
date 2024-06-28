@@ -46,7 +46,7 @@ const categories = [
       height: 110px;
       width: 100%;
       text-indent: -9999px;
-      background: url('@/assets/images/下载.jpg') no-repeat center 18px /
+      background: url('@/assets/images/nankai/nankai-logo.png') no-repeat center 18px /
         contain;
     }
   }

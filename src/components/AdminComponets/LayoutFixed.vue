@@ -61,7 +61,7 @@ const categories = [
   .logo {
     width: 200px;
     height: 80px;
-    background: url('@/assets/images/下载.jpg') no-repeat right 2px;
+    background: url('@/assets/images/nankai/nankai-logo.png') no-repeat right 2px;
     background-size: 160px auto;
   }
 
