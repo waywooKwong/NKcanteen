@@ -30,6 +30,10 @@
 4. ./server/server.cjs 中更改本地数据库 config 配置信息
 5. node server.cjs 启动数据库连接
 6. cd .. 根目录下 npm run dev 启动网页
+
+p.s.
+初次部署需 新建用户与管理端账户
+public/dishes 存储餐品图片，使用需管理端窗口更换为本地图片调试
 ```
 ## 技术栈
 
